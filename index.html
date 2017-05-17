@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="js/vue.js"></script>
+
+</head>
+<body>
+	<!--======================声明式渲染===========================-->
+	<!-- 测试 1-->
+	<div id="test1">
+        {{message}}
+	</div>
+	<script type="text/javascript">
+		var demo1 = new Vue({
+			el:'#test1',
+			data:{
+				message:'Hello test1'
+			}
+		})
+	</script>
+
+	<!-- 测试 2-->
+	<div id="test2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟后-查看此处动态绑定的提示信息！
+        </span>
+	</div>
+	<script type="text/javascript">
+		var demo2 = new Vue({
+			el:'#test2',
+			data:{
+				message:'页面加载于'+new Date()
+			}
+		})
+	</script>
+
+	<!--======================条件与循环===========================-->
+    <!-- 测试 3==条件-->
+	<div id="test3">
+        <p v-if="seen">当seen为true时，显示该条信息</p>
+	</div>
+	<script type="text/javascript">
+		var demo3 = new Vue({			
+			el:'#test3',
+			data:{
+				seen:true
+			}
+		})
+	</script>
+	<!-- 测试4 ==循环-->
+	<div id="test4">
+		<ol>
+			<li v-for="key in dataArr">
+				{{key.text}}
+			</li>
+		</ol>
+	</div>
+	<script type="text/javascript">
+		var demo4 = new Vue({
+			el: '#test4',
+			data: {
+			    dataArr: [
+				    { text: '学习 JavaScript' },
+				    { text: '学习 Vue' },
+				    { text: '整个牛项目' }
+			    ]
+			}
+
+		})
+	</script>
+	<!--======================处理用户输入===========================-->
+	<!-- 测试5 ==逆转信息-->
+	<div id="test5">
+		<p>{{message}}</p>
+		<button v-on:click="reverseMessage">逆转信息</button>
+	</div>
+	<script type="text/javascript">
+		var demo5=new Vue({
+			el:'#test5',
+			data:{
+				message:'Hello test5 js'
+			},
+			methods:{
+				reverseMessage:function(){
+					this.message=this.message.split('').reverse().join('')
+				}
+			}
+		})		
+	</script>
+
+	<!-- 测试6 ==输入双向绑定-->
+	<div id="test6">
+		<p>{{message}}</p>
+		<input v-model="message">
+	</div>
+	<script type="text/javascript">
+		var demo6 = new Vue({
+			el:"#test6",
+			data:{
+				message:'Hello test6'
+			}
+		})
+	</script>
+
+
+	<!--======================组件化应用构建===========================-->
+	<!-- 测试7 ==组件化渲染 -->
+	<div id="test7">
+		<ol>
+		   <!-- 现在我们为每个todo-item提供待办项对象    -->
+		   <!-- 待办项对象是变量，即其内容可以是动态的 -->
+		   <todo-item v-for="key in groceryList" v-bind:todo="key"></todo-item>
+		</ol>
+	</div>
+	<script type="text/javascript">
+		Vue.component('todo-item', {
+		  props: ['todo'],
+		  template: '<li>{{ todo.text }}</li>'
+		})
+		var demo7 = new Vue({
+		  el: '#test7',
+		  data: {
+		    groceryList: [
+		      { text: '蔬菜' },
+		      { text: '奶酪' },
+		      { text: '随便其他什么人吃的东西' }
+		    ]
+		  }
+		})
+	</script>
+
+
+</body>    
+</html>
